@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+sqlalchemy
+web3
+scikit-learn
+pandas
+numpy
+python-dotenv
