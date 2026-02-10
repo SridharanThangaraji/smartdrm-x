@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDRM-X | AI Analytics</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <div id="topbar-container"></div>
+
+            <div class="content-container">
+                <h1 class="page-title">AI Threat Intelligence</h1>
+
+                <div class="grid grid-cols-2">
+                    <div class="card">
+                        <h2>Real-time Risk Analysis</h2>
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <div id="risk-score-display"
+                                style="font-size: 64px; font-weight: 700; transition: color 0.3s;">
+                                ...
+                            </div>
+                            <p style="color: var(--text-secondary); margin-top: 10px; font-size: 18px;">Current Threat
+                                Score</p>
+                            <div style="margin-top: 20px; font-size: 14px; color: var(--text-secondary);">
+                                Based on access frequency, IP anomalies, and request patterns.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>Behavioral Anomaly Detection</h2>
+                        <div style="position: relative; height: 300px; width: 100%">
+                            <canvas id="activity-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 24px;">
+                    <h2>Recent Security Events</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Event Type</th>
+                                <th>Details</th>
+                                <th>Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-body">
+                            <tr>
+                                <td colspan="4" class="text-center">Loading security logs...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/modules/ai.js"></script>
+</body>
+
+</html>

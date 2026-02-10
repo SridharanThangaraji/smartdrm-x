@@ -1,4 +1,4 @@
-from backend.app.utils.audit_logger import log_event
+from app.utils.audit_logger import log_event
 
 
 log_event("ASSET_UPLOADED", {

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDRM-X | Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar Container -->
+            <div id="topbar-container"></div>
+
+            <div class="content-container">
+                <h1 class="page-title">Executive Dashboard</h1>
+
+                <div class="grid grid-cols-4">
+                    <div class="card stat-card">
+                        <div class="label">Total Assets</div>
+                        <div class="value" id="stat-assets">...</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="label">Active Licenses</div>
+                        <div class="value" id="stat-licenses">...</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="label">Threat Level</div>
+                        <div class="value" id="stat-risk">...</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="label">System Status</div>
+                        <div class="value" style="color: var(--success)">Online</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2" style="margin-top: 32px">
+                    <div class="card">
+                        <h2>Quick Actions</h2>
+                        <div style="display: flex; gap: 16px;">
+                            <button class="btn btn-primary" onclick="window.location.href='upload.html'">Upload
+                                Asset</button>
+                            <button class="btn btn-primary" onclick="window.location.href='assets.html'"
+                                style="background: var(--bg-card); border: 1px solid var(--border-color)">Manage
+                                Assets</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/modules/dashboard.js"></script>
+</body>
+
+</html>

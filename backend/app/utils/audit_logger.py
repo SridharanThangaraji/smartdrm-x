@@ -1,14 +1,31 @@
 from datetime import datetime
-
-AUDIT_LOGS = []
+import json
+from app.database import SessionLocal
+from app import models
 
 def log_event(event_type: str, details: dict):
-    AUDIT_LOGS.append({
-        "event": event_type,
-        "details": details,
-        "timestamp": datetime.utcnow().isoformat()
-    })
+    db = SessionLocal()
+    try:
+        user_id = details.get("user_id") or details.get("issued_by") or details.get("revoked_by")
+        
+        log = models.AuditLog(
+            event_type=event_type,
+            details=json.dumps(details),
+            timestamp=datetime.utcnow(),
+            user_id=user_id
+        )
+        db.add(log)
+        db.commit()
+    except Exception as e:
+        print(f"Audit Log Error: {e}")
+    finally:
+        db.close()
 
 def get_logs():
-    return AUDIT_LOGS[::-1]  # latest first
+    db = SessionLocal()
+    try:
+        logs = db.query(models.AuditLog).order_by(models.AuditLog.timestamp.desc()).limit(100).all()
+        return logs
+    finally:
+        db.close()
 

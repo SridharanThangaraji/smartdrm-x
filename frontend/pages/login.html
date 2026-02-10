@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDRM-X | Login</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="brand">
+            <div class="logo">S</div>
+            <h1>SmartDRM-X</h1>
+        </div>
+        <p class="subtitle">Decentralized Rights Management System</p>
+
+        <div class="card" id="login-card">
+            <h2>Access Portal</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="username" required placeholder="Enter ID" value="admin">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="••••••••" value="admin">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Authenticate</button>
+                <div style="margin-top: 10px; text-align: center;">
+                    <button type="button" id="demo-btn" class="btn-text">Use Demo Credentials</button>
+                </div>
+            </form>
+            <p class="switch-auth">New researcher? <a href="register.html">Register Protocol</a></p>
+        </div>
+    </div>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</body>
+
+</html>

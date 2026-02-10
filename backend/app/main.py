@@ -1,19 +1,26 @@
+"""
+This is the main entry point for the SmartDRM-X FastAPI backend. 
+It initializes the application, configures CORS middleware, registers all API routers (Auth, Asset, AI), 
+and handles the initial database setup and default user seeding on startup.
+"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from app.database import engine, Base
+from app.auth.auth_routes import router as auth_router
+from app.asset.asset_routes import router as asset_router
+from app.ai_engine.routes import router as ai_router
+from app.utils.audit_logger import get_logs
 
-from backend.app.auth.auth_routes import router as auth_router
-from backend.app.asset.asset_routes import router as asset_router
-from backend.app.ai_engine.model import analyze_usage
-from backend.app.utils.audit_logger import log_event, get_logs
+# Initialize Database
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="SmartDRM-X API",
-    description="Blockchain & AI-powered DRM System",
+    description="Blockchain & AI-powered Digital Rights Management System",
     version="1.0"
 )
 
-# -------------------- CORS --------------------
+# Configure CORS for frontend interaction
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,38 +29,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# -------------------- ROUTERS --------------------
+# Register Routers
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(asset_router, prefix="/asset", tags=["Asset"])
+app.include_router(ai_router, prefix="/ai", tags=["AI"])
 
-# -------------------- ROOT --------------------
 @app.get("/")
 def root():
-    return {"status": "SmartDRM-X Backend Running"}
+    return {"status": "SmartDRM-X Backend is operational"}
 
-# -------------------- AI ANALYSIS --------------------
-class AIRequest(BaseModel):
-    downloads: int
-    ip_count: int
-
-@app.post("/ai/analyze")
-def ai_analyze(req: AIRequest):
-    result = analyze_usage({
-        "downloads": req.downloads,
-        "ip_count": req.ip_count
-    })
-
-    # Audit log
-    log_event("AI_ANALYSIS", {
-        "downloads": req.downloads,
-        "ip_count": req.ip_count,
-        "result": result
-    })
-
-    return {"analysis_result": result}
-
-# -------------------- AUDIT LOGS --------------------
 @app.get("/audit/logs")
 def fetch_audit_logs():
     return get_logs()
 
+@app.on_event("startup")
+def startup_event():
+    from app.create_default_user import create_default_user
+    create_default_user()

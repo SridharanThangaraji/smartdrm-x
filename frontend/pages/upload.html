@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDRM-X | Upload</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+
+        <main class="main-content">
+            <div id="topbar-container"></div>
+
+            <div class="content-container">
+                <h1 class="page-title">Secure Upload</h1>
+
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h2>Upload New Asset</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        Files are automatically encrypted with AES-256 before storage. A hash is generated and stored on
+                        the Ethereum blockchain.
+                    </p>
+                    <form id="upload-form">
+                        <div class="upload-zone" id="drop-zone">
+                            <input type="file" id="file-input" required style="display: none">
+                            <div style="padding: 40px; border: 2px dashed var(--border-color); border-radius: 8px; text-align: center; cursor: pointer;"
+                                onclick="document.getElementById('file-input').click()">
+                                <div style="font-size: 32px; margin-bottom: 12px;">📄</div>
+                                <span id="file-label">Click to select file</span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">Encrypt &
+                            Upload</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/modules/upload.js"></script>
+</body>
+
+</html>
