@@ -15,25 +15,25 @@
             <div class="logo">S</div>
             <h1>SmartDRM-X</h1>
         </div>
-        <p class="subtitle">Decentralized Rights Management System</p>
+        <p class="subtitle">Blockchain & AI–powered digital rights management</p>
 
         <div class="card" id="login-card">
-            <h2>Access Portal</h2>
+            <h2>Sign in</h2>
             <form id="login-form">
                 <div class="input-group">
                     <label>Username</label>
-                    <input type="text" id="username" required placeholder="Enter ID" value="admin">
+                    <input type="text" id="username" required placeholder="Username" autocomplete="username" value="admin">
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="password" required placeholder="••••••••" value="admin">
+                    <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password" value="admin">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Authenticate</button>
-                <div style="margin-top: 10px; text-align: center;">
-                    <button type="button" id="demo-btn" class="btn-text">Use Demo Credentials</button>
-                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                <p style="margin-top: 12px; text-align: center;">
+                    <button type="button" id="demo-btn" class="btn-text">Use demo (admin / admin)</button>
+                </p>
             </form>
-            <p class="switch-auth">New researcher? <a href="register.html">Register Protocol</a></p>
+            <p class="switch-auth">New user? <a href="register.html">Register</a></p>
         </div>
     </div>
     <script src="../assets/js/api.js"></script>

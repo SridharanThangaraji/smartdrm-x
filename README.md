@@ -26,28 +26,35 @@ SmartDRM-X is a research-grade decentralized platform for managing digital right
 - Node.js
 - Ganache (GUI or CLI) running on port `7545`
 
-### 1. Backend Setup
+### Quick start (run both from project root)
+```bash
+# From project root: install deps then run backend + frontend together
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python run.py
+```
+- **Backend**: http://127.0.0.1:8000  
+- **Frontend**: http://127.0.0.1:5173 (redirects to login)  
+- Stop with `Ctrl+C`.
+
+Options: `python run.py --backend-only` or `python run.py --frontend-only` to run a single part.
+
+### Backend-only setup
 ```bash
 cd backend
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r app/requirements.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-### 2. Frontend (Vanilla JS)
-Since the frontend is now pure HTML/JS, you can serve it using any static file server.
-
-1.  **Navigate to frontend directory**:
-    ```bash
-    cd frontend
-    ```
-2.  **Start a simple HTTP server**:
-    ```bash
-    python3 -m http.server 5173
-    ```
-3.  **Access the App**:
-    Open [http://localhost:5173](http://localhost:5173) in your browser.
-    You will be automatically redirected to `pages/login.html`.
+### Frontend-only (Vanilla JS)
+From project root after starting the backend (or use `run.py --frontend-only`):
+```bash
+cd frontend && python3 -m http.server 5173
+```
+Open [http://localhost:5173](http://localhost:5173); you are redirected to `pages/login.html`.
 
 ## 🧪 Testing
 
@@ -63,5 +70,7 @@ See `tests/api_test_flow.sh` for a curl-based test sequence.
 6. Check "AI Analytics" for risk scores based on download activity.
 
 ## 📚 Documentation
+- [**How it works end-to-end**](docs/HOW_IT_WORKS.md) – User journeys, data flow, APIs, and how to run
 - [Architecture Overview](docs/architecture.md)
-- [API Documentation](http://127.0.0.1:8000/docs)
+- [Manual testing checklist](docs/manual_testing.md)
+- [API docs (Swagger)](http://127.0.0.1:8000/docs) when the backend is running

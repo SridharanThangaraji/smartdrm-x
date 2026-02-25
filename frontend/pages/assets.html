@@ -18,22 +18,47 @@
 
             <div class="content-container">
                 <h1 class="page-title">Asset Repository</h1>
+                <p class="card-desc">Manage your uploaded assets, grant licenses to others, and download assets shared with you.</p>
 
-                <div class="card">
+                <div class="card" style="margin-bottom: 24px;">
                     <h2>My Uploaded Assets</h2>
+                    <p class="card-desc">Encrypted assets you own. Grant access to researchers or groups.</p>
+                    <p class="card-desc" style="margin-bottom: 0; font-size: 12px; color: var(--text-secondary);">Tip: Use demo user <strong>demo</strong> (password: demo) to test granting a license, then log in as demo to see it under Shared With Me.</p>
                     <div class="table-responsive">
                         <table class="data-table" id="assets-table">
                             <thead>
                                 <tr>
                                     <th>Filename</th>
-                                    <th>Hash (Blockchain)</th>
-                                    <th>Date</th>
+                                    <th>Blockchain hash</th>
+                                    <th>Uploaded</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="assets-body">
                                 <tr>
-                                    <td colspan="4" class="text-center">Loading assets...</td>
+                                    <td colspan="4" class="text-center">Loading…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Shared With Me</h2>
+                    <p class="card-desc">Assets others have licensed to you. Download within your access limit.</p>
+                    <div class="table-responsive">
+                        <table class="data-table" id="shared-table">
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Uses left</th>
+                                    <th>Expires</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shared-body">
+                                <tr>
+                                    <td colspan="4" class="text-center">Loading…</td>
                                 </tr>
                             </tbody>
                         </table>

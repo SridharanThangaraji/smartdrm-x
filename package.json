@@ -1,0 +1,11 @@
+{
+  "name": "smartdrm-x",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:browser": "playwright test tests/browser/ --reporter=list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}

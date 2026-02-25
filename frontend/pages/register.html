@@ -15,29 +15,29 @@
             <div class="logo">S</div>
             <h1>SmartDRM-X</h1>
         </div>
-        <p class="subtitle">Join the Secure Research Network</p>
+        <p class="subtitle">Create an account to upload and license assets</p>
 
         <div class="card" id="register-card">
-            <h2>Initialize Identity</h2>
+            <h2>Register</h2>
             <form id="register-form">
                 <div class="input-group">
-                    <label>New Username</label>
-                    <input type="text" id="reg-username" required placeholder="Choose ID">
+                    <label>Username</label>
+                    <input type="text" id="reg-username" required placeholder="Choose a username" autocomplete="username">
                 </div>
                 <div class="input-group">
-                    <label>Set Password</label>
-                    <input type="password" id="reg-password" required placeholder="Create Password">
+                    <label>Password</label>
+                    <input type="password" id="reg-password" required placeholder="Create a password" autocomplete="new-password">
                 </div>
                 <div class="input-group">
                     <label>Role</label>
                     <select id="reg-role">
-                        <option value="user">Researcher / Creator</option>
-                        <option value="admin">System Administrator</option>
+                        <option value="user">Creator / Researcher</option>
+                        <option value="admin">Administrator</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-success btn-block">Create Identity</button>
+                <button type="submit" class="btn btn-success btn-block">Create account</button>
             </form>
-            <p class="switch-auth">Existing credentials? <a href="login.html">Login</a></p>
+            <p class="switch-auth">Already have an account? <a href="login.html">Sign in</a></p>
         </div>
     </div>
     <script src="../assets/js/api.js"></script>

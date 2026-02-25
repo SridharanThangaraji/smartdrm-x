@@ -25,7 +25,16 @@ def get_logs():
     db = SessionLocal()
     try:
         logs = db.query(models.AuditLog).order_by(models.AuditLog.timestamp.desc()).limit(100).all()
-        return logs
+        return [
+            {
+                "id": log.id,
+                "event_type": log.event_type,
+                "details": log.details,
+                "timestamp": log.timestamp.isoformat() if log.timestamp else None,
+                "user_id": log.user_id,
+            }
+            for log in logs
+        ]
     finally:
         db.close()
 

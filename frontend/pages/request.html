@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartDRM-X | Request Access</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-layout">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="content-container">
+                <h1 class="page-title">Request Access</h1>
+                <p class="card-desc">As a <strong>normal user</strong>: use the <strong>Catalog</strong> below to see assets you can request (movies, songs, files). As an <strong>owner/admin</strong>: use <strong>Incoming requests</strong> to approve or deny requests for your content.</p>
+
+                <div class="card" style="margin-bottom: 24px;">
+                    <h2>Catalog – assets you can request</h2>
+                    <p class="card-desc">Here you see <strong>all assets that admins and other owners have made available</strong> and that you don’t already have access to. Click “Request access” to ask the owner; once they approve, the file appears under Assets → Shared with me.</p>
+                    <div class="table-responsive">
+                        <table class="data-table" id="catalog-table">
+                            <thead>
+                                <tr>
+                                    <th>Filename</th>
+                                    <th>Owner</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="catalog-body">
+                                <tr><td colspan="3" class="text-center">Loading…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 24px;">
+                    <h2>Incoming requests (approve/deny as owner)</h2>
+                    <p class="card-desc">Users who asked for access to <strong>your</strong> assets. Click Approve to grant a license (set days and download limit), or Deny.</p>
+                    <div class="table-responsive">
+                        <table class="data-table" id="incoming-table">
+                            <thead>
+                                <tr>
+                                    <th>Asset</th>
+                                    <th>Requested by</th>
+                                    <th>Message</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incoming-body">
+                                <tr><td colspan="5" class="text-center">Loading…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>My requests</h2>
+                    <p class="card-desc">Requests you sent. Pending = waiting for owner; Approved = you can download from Assets → Shared with me.</p>
+                    <div class="table-responsive">
+                        <table class="data-table" id="mine-table">
+                            <thead>
+                                <tr>
+                                    <th>Asset</th>
+                                    <th>Owner</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mine-body">
+                                <tr><td colspan="4" class="text-center">Loading…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/modules/request.js"></script>
+</body>
+</html>

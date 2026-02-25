@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Backend
+backend/smartdrm.db
+backend/*.db
+backend/secret.key
+backend/app/asset/storage/*.enc
+
+# Frontend
+node_modules/
+.vite/
+*.log
+.DS_Store
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Docs (generated; source is .md)
+# Uncomment if you don't want to track PDF/HTML:
+# docs/conference_paper.pdf
+# docs/conference_paper_full.html

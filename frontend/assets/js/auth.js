@@ -1,12 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Check if already logged in (only on auth pages)
     const isAuthPage = window.location.pathname.includes("login.html") || window.location.pathname.includes("register.html");
     if (localStorage.getItem("token") && isAuthPage) {
         window.location.href = "dashboard.html";
         return;
     }
 
-    // Login Logic
+    const demoBtn = document.getElementById("demo-btn");
+    if (demoBtn) {
+        demoBtn.addEventListener("click", () => {
+            const u = document.getElementById("username");
+            const p = document.getElementById("password");
+            if (u) u.value = "admin";
+            if (p) p.value = "admin";
+        });
+    }
+
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
@@ -21,15 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const data = await API.login(u, p);
+                if (!data || !data.token) {
+                    alert("Login Failed: Invalid response from server.");
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    return;
+                }
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify({
                     username: data.username,
                     role: data.role,
-                    id: data.token.split(":")[0]
+                    id: (data.token + "").split(":")[0]
                 }));
                 window.location.href = "dashboard.html";
             } catch (err) {
-                alert("Login Failed: " + err.message);
+                alert("Login Failed: " + (err && err.message ? err.message : "Invalid credentials"));
                 btn.innerText = originalText;
                 btn.disabled = false;
             }

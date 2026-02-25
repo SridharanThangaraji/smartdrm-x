@@ -61,3 +61,14 @@ class UserGroup(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     group_id = Column(Integer, ForeignKey("groups.id"))
 
+class AccessRequest(Base):
+    """User requests access to an asset (e.g. movie, song). Owner can approve or deny."""
+    __tablename__ = "access_requests"
+    id = Column(Integer, primary_key=True, index=True)
+    asset_id = Column(Integer, ForeignKey("assets.id"))
+    requester_id = Column(Integer, ForeignKey("users.id"))
+    status = Column(String, default="pending")  # pending, approved, denied
+    message = Column(String, nullable=True)    # optional note from requester
+    created_at = Column(DateTime, default=datetime.utcnow)
+    resolved_at = Column(DateTime, nullable=True)
+

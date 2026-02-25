@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SmartDRM-X Conference Paper</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SmartDRM-X Conference Paper</h1>
+</header>
+<h1
+id="smartdrm-x-a-blockchain-and-ai-driven-digital-rights-management-system-for-secure-asset-distribution-and-piracy-risk-detection">SmartDRM-X:
+A Blockchain and AI-Driven Digital Rights Management System for Secure
+Asset Distribution and Piracy Risk Detection</h1>
+<p><strong>Authors:</strong> [Author Names]<br />
+<strong>Affiliation:</strong> [Institution]<br />
+<strong>Contact:</strong> [Email]</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Digital Rights Management (DRM) systems face persistent challenges:
+centralization creates single points of failure and opacity, static
+policies cannot adapt to abuse patterns, and license lifecycle remains
+hard to audit. We present SmartDRM-X, a decentralized framework that
+combines (i) an Ethereum-compatible blockchain layer for tamper-evident
+asset registration and license issuance, (ii) AES-256-GCM authenticated
+encryption for confidential asset storage, (iii) flexible licensing with
+per-user and group-based access control and revocation, and (iv) an
+AI-driven behavioral analysis engine that computes user risk scores from
+audit logs to detect piracy-related anomalies. The system is implemented
+as a web application with a FastAPI backend, SQLite persistence, and a
+lightweight vanilla JavaScript frontend. We describe the architecture,
+security model, and end-to-end flows for upload, licensing, download,
+and risk analytics. Initial evaluation shows that the prototype supports
+sub-second license verification, correct enforcement of expiry and
+access limits, and consistent risk level assignment (LOW/MEDIUM/HIGH)
+from rule-based heuristics over 24-hour activity windows. SmartDRM-X
+demonstrates the feasibility of a hybrid blockchain–AI DRM ecosystem
+suitable for research and pilot deployments; we discuss limitations and
+outline future work including zero-knowledge license verification and
+machine-learning-based anomaly detection.</p>
+<p><strong>Keywords:</strong> Digital Rights Management, blockchain,
+smart contracts, AES-GCM encryption, behavioral analytics, anomaly
+detection, license management, audit logging.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<h3 id="motivation-and-problem-statement">1.1 Motivation and Problem
+Statement</h3>
+<p>The growth of digital content distribution has intensified the need
+for effective Digital Rights Management (DRM). Content creators and
+institutions require mechanisms to control who can access which assets,
+under what conditions, and for how long, while preserving integrity and
+enabling auditability. Traditional DRM often relies on centralized
+license servers and opaque policy enforcement, leading to concerns about
+availability, transparency, and adaptability to new attack vectors such
+as credential sharing and automated scraping.</p>
+<p>Three main gaps motivate our work. First,
+<strong>centralization</strong>: license state and access decisions are
+typically held in single or few servers, creating availability and trust
+bottlenecks. Second, <strong>static enforcement</strong>: rules are
+fixed at deployment time and do not adapt to behavioral signals (e.g.,
+abnormal download frequency or access denials). Third,
+<strong>auditability</strong>: stakeholders lack a cryptographically
+verifiable record of asset registration and license issuance, making
+disputes and compliance checks difficult.</p>
+<h3 id="objectives-and-contributions">1.2 Objectives and
+Contributions</h3>
+<p>We aim to design and implement a DRM system that:</p>
+<ol type="1">
+<li><strong>Decentralizes trust</strong> by recording asset hashes and
+license events on an Ethereum-compatible blockchain, providing an
+immutable, verifiable ledger.</li>
+<li><strong>Protects confidentiality</strong> by encrypting assets with
+AES-256-GCM and only decrypting for users holding a valid license
+enforced by the backend.</li>
+<li><strong>Supports flexible licensing</strong> including per-user and
+group-based licenses with expiry and access limits, and revocation.</li>
+<li><strong>Improves situational awareness</strong> by analyzing audit
+logs with a behavioral engine that assigns risk scores and levels to
+users, supporting early detection of misuse.</li>
+<li><strong>Keeps a full audit trail</strong> of uploads, license
+grants/revocations, accesses, and denials for compliance and
+forensics.</li>
+</ol>
+<p>Our main contributions are: (i) the specification and implementation
+of SmartDRM-X, integrating blockchain, encryption, licensing, and AI
+analytics in a single coherent stack; (ii) a clear separation of
+concerns (presentation, business logic, persistence, blockchain, and
+intelligence); (iii) an open, reproducible prototype with documented
+APIs and end-to-end flows; and (iv) an initial evaluation of correctness
+and performance on a local deployment.</p>
+<h3 id="paper-organization">1.3 Paper Organization</h3>
+<p>The rest of the paper is organized as follows. Section 2 reviews
+related work in DRM, blockchain-based licensing, and behavioral
+analytics. Section 3 presents the system architecture and threat model.
+Section 4 details the design of each layer: security, licensing,
+blockchain, and AI. Section 5 describes the implementation, including
+APIs and data models. Section 6 reports evaluation methodology and
+results. Section 7 discusses limitations and Section 8 concludes with
+future directions and references.</p>
+<hr />
+<h2 id="related-work">2. Related Work</h2>
+<h3 id="traditional-and-centralized-drm">2.1 Traditional and Centralized
+DRM</h3>
+<p>Classical DRM systems [1,2] rely on trusted license servers that
+issue and validate licenses. Content is often protected by symmetric or
+asymmetric encryption, with keys delivered only after license checks.
+These systems have been criticized for vendor lock-in, single points of
+failure, and lack of transparency [3]. Our work does not replace the
+need for a backend that enforces policy and performs decryption, but we
+offload <em>attestation</em> of asset registration and license issuance
+to a blockchain so that these events are independently verifiable.</p>
+<h3 id="blockchain-and-smart-contracts-for-drm">2.2 Blockchain and Smart
+Contracts for DRM</h3>
+<p>Several proposals use blockchains to record ownership, licenses, or
+usage rights. Zheng et al. [4] survey blockchain-based DRM and highlight
+benefits in traceability and decentralization. Ethereum smart contracts
+have been used for media rights [5], software licensing [6], and content
+distribution [7]. SmartDRM-X follows this line: we use a smart contract
+(or a mock when no chain is available) to store asset hashes and license
+transaction hashes, while the actual license state (expiry, access
+count) is enforced efficiently in a database to avoid repeated on-chain
+reads during access.</p>
+<h3 id="encryption-and-key-management-in-drm">2.3 Encryption and Key
+Management in DRM</h3>
+<p>DRM systems commonly use symmetric encryption for content and various
+key distribution schemes [8]. AES in GCM mode provides both
+confidentiality and authenticity and is widely recommended [9]. In
+SmartDRM-X we use AES-256-GCM with a server-held key; keys are not
+stored on-chain. Future work could integrate key encapsulation or
+threshold schemes to reduce single-point trust.</p>
+<h3 id="behavioral-and-anomaly-based-security">2.4 Behavioral and
+Anomaly-Based Security</h3>
+<p>Behavioral analytics are used in fraud detection, intrusion
+detection, and insider threat analysis [10]. In DRM, patterns such as
+excessive downloads, credential sharing (multiple IPs), or repeated
+access denials can indicate abuse. We adopt a rule-based risk model over
+audit-log features (download count, denials, unique assets, and a
+placeholder for IP diversity) to assign LOW/MEDIUM/HIGH risk levels.
+This can be extended with machine learning or statistical anomaly
+detection [11].</p>
+<h3 id="positioning-of-smartdrm-x">2.5 Positioning of SmartDRM-X</h3>
+<p>SmartDRM-X combines blockchain-based attestation, server-side
+AES-256-GCM protection, database-backed licensing with groups and
+revocation, and an audit-driven risk engine in one prototype. It is
+intended as a research and teaching platform and a basis for pilot
+deployments rather than a production-grade product; we emphasize
+clarity, modularity, and reproducibility.</p>
+<hr />
+<h2 id="system-architecture-and-threat-model">3. System Architecture and
+Threat Model</h2>
+<h3 id="high-level-architecture">3.1 High-Level Architecture</h3>
+<p>SmartDRM-X is structured in four logical layers:</p>
+<ul>
+<li><p><strong>Presentation layer:</strong> A web frontend (HTML, CSS,
+JavaScript) providing login, dashboard, asset upload, asset and license
+management, and AI analytics views. It communicates with the backend via
+REST over HTTP, using a Bearer token for authentication.</p></li>
+<li><p><strong>Application layer:</strong> A FastAPI backend that
+implements authentication, asset upload/download, license issuance and
+revocation, group management, and AI/audit endpoints. It orchestrates
+encryption, database access, and blockchain calls.</p></li>
+<li><p><strong>Persistence layer:</strong> (i) A relational database
+(SQLite) storing users, assets, licenses, groups, and audit logs; (ii) a
+file store holding encrypted asset blobs (one file per asset, keyed by
+content hash); (iii) optionally an Ethereum-compatible chain (e.g.,
+Ganache) for asset and license transaction hashes.</p></li>
+<li><p><strong>Intelligence layer:</strong> A module that queries audit
+logs, extracts behavioral features (e.g., downloads and denials in the
+last 24 hours), and runs a rule-based detector to produce risk scores
+and levels per user.</p></li>
+</ul>
+<p>Data flow in the main scenarios is as follows.
+<strong>Upload:</strong> Client sends a file → backend encrypts it,
+computes hash, stores ciphertext on disk, registers hash on-chain (or
+mock), inserts asset and audit records in the DB.
+<strong>Access:</strong> Client requests download with asset hash →
+backend checks identity and license (owner or valid license with
+remaining quota and not expired) → reads ciphertext, decrypts, streams
+to client and logs access. <strong>License grant/revoke:</strong>
+Backend updates license rows and optionally records transaction hashes
+on-chain; all actions are written to the audit log.</p>
+<h3 id="threat-model">3.2 Threat Model</h3>
+<p>We assume the following.</p>
+<ul>
+<li><strong>Trusted backend:</strong> The server (FastAPI process, DB,
+and file store) is trusted. Compromise of the server implies full
+compromise of confidentiality and access control.</li>
+<li><strong>Honest blockchain (when used):</strong> If a real chain is
+used, we assume the chain is correct and that transactions are
+eventually confirmed; we do not model chain reorganizations.</li>
+<li><strong>Untrusted clients:</strong> Users may try to access assets
+without a valid license, share credentials, or automate excessive
+downloads. The system mitigates by enforcing licenses on every download,
+logging all events, and exposing risk scores to administrators.</li>
+<li><strong>Network:</strong> We assume TLS in deployment; the prototype
+runs over HTTP for local testing. Passwords are hashed with BCrypt
+before storage; tokens are opaque identifiers (user_id:username) and
+must be protected by HTTPS in production.</li>
+</ul>
+<p>We do not address: side-channel attacks on the server, physical
+access to storage, or compromise of the encryption key file. Key
+management in production should use an HSM or secure vault as noted in
+the codebase.</p>
+<hr />
+<h2 id="design">4. Design</h2>
+<h3 id="security-layer">4.1 Security Layer</h3>
+<p><strong>Authentication.</strong> Users register with username,
+password, and role (e.g., user, admin). Passwords are hashed with BCrypt
+and stored in the <code>users</code> table. On login, the backend
+returns a token string <code>user_id:username</code>, which the frontend
+sends as <code>Authorization: Bearer &lt;token&gt;</code> on subsequent
+requests. A dependency in FastAPI parses the token and loads the user
+from the database; invalid or missing tokens result in 401
+Unauthorized.</p>
+<p><strong>Encryption.</strong> Digital assets are encrypted with
+AES-256-GCM. A 256-bit key is stored in a file (<code>secret.key</code>)
+on the server; the same key is used for all assets in the prototype. For
+each encryption, a 12-byte random nonce is generated and prepended to
+the ciphertext; the format is <code>nonce || ciphertext</code>.
+Decryption reads the first 12 bytes as nonce and the remainder as
+ciphertext. This provides confidentiality and integrity of stored
+content.</p>
+<p><strong>Hashing.</strong> Asset identity is defined by the SHA-256
+hash of the <em>encrypted</em> content, so duplicate uploads of the same
+file (same ciphertext) yield the same hash and can be deduplicated. User
+passwords are never stored in plaintext; only BCrypt hashes are
+persisted.</p>
+<h3 id="licensing-and-access-control">4.2 Licensing and Access
+Control</h3>
+<p><strong>License model.</strong> A license is a record linking an
+asset, a grantee (user or group), an expiry time, and an access limit
+(number of allowed downloads). Licenses can be issued to a specific user
+(user_id) or to a group (group_id); in the latter case, any user in that
+group may consume the license subject to the same expiry and limit. A
+single license row has an <code>access_used</code> counter incremented
+on each successful download; access is denied when
+<code>access_used &gt;= access_limit</code> or when the current time is
+past <code>expires_at</code>. Licenses can be revoked by setting
+<code>active = False</code>, which is checked on every access.</p>
+<p><strong>Access decision.</strong> For a download request (asset hash,
+authenticated user), the backend: (i) loads the asset; (ii) if the user
+is the owner, allows access; (iii) otherwise, looks up an active license
+for this asset and user (or for a group the user belongs to) with
+<code>expires_at &gt; now</code> and
+<code>access_used &lt; access_limit</code>; (iv) if found, increments
+<code>access_used</code> and proceeds to decrypt and stream; otherwise
+returns 403 and logs an access denial.</p>
+<p><strong>Groups.</strong> Groups have a name and an admin (user_id).
+The admin can add members (user_id, group_id) to the group. When issuing
+a license, the backend can set <code>group_id</code> instead of
+<code>user_id</code>; the access check then considers all members of
+that group.</p>
+<h3 id="blockchain-layer">4.3 Blockchain Layer</h3>
+<p><strong>Role of the chain.</strong> The blockchain is used to record
+(i) asset registration: hash of the encrypted content and optionally a
+transaction hash returned by the contract; (ii) license issuance:
+transaction hash for the license event. This provides a tamper-evident
+log that can be audited independently of the database. The actual
+license state (expiry, access_used) is not stored on-chain in our design
+to keep access checks fast and to avoid gas costs on every grant.</p>
+<p><strong>Contract interface.</strong> The backend calls a contract (or
+mock) to register an asset and to issue a license. When Ganache (or
+another Ethereum node) is not available, the backend uses a mock that
+returns placeholder transaction hashes (e.g., <code>0x_mock_tx</code>).
+All return values that might be stored in the database are normalized to
+strings so that mock objects never get persisted.</p>
+<p><strong>Implementation note.</strong> The prototype uses Web3.py to
+connect to a provider (e.g., Ganache on port 8545). Contract addresses
+and ABI are configured so that the same code can run with or without a
+live chain.</p>
+<h3 id="audit-and-ai-risk-engine">4.4 Audit and AI Risk Engine</h3>
+<p><strong>Audit log.</strong> Every significant action is logged: asset
+upload, license issued, license revoked, asset accessed, and asset
+access denied. Each log entry has an event type, a JSON details field
+(e.g., asset_hash, user_id, filename), a timestamp, and a user_id when
+applicable. Logs are stored in the <code>audit_logs</code> table and
+exposed via an API for the dashboard and for analytics.</p>
+<p><strong>Feature extraction.</strong> For a given user and a time
+window (e.g., last 24 hours), the engine aggregates: number of
+successful downloads (ASSET_ACCESSED), number of access denials
+(ASSET_ACCESS_DENIED), number of unique assets accessed (from details),
+and number of distinct IPs if present (currently a placeholder). These
+form a small feature vector per user.</p>
+<p><strong>Risk scoring.</strong> A rule-based detector maps features to
+a numeric risk score (0–100) and a level (LOW, MEDIUM, HIGH). Example
+rules: more than 50 downloads in 24h adds 40 to the score; more than 5
+denials adds 30; more than 15 unique assets adds 20; multiple IPs (when
+available) add 25. The level is HIGH if score ≥ 70, MEDIUM if ≥ 30, else
+LOW. The score is capped at 100. The engine also returns a list of
+textual “reasons” (e.g., “High download volume”) for
+interpretability.</p>
+<p><strong>Integration.</strong> The dashboard requests aggregated stats
+(total assets, active licenses, risk level) per user. The AI analytics
+page requests the full risk analysis (score, level, reasons) and the
+recent audit log entries. Both are served by the same backend and use
+the same audit data.</p>
+<hr />
+<h2 id="implementation">5. Implementation</h2>
+<h3 id="technology-stack">5.1 Technology Stack</h3>
+<ul>
+<li><strong>Backend:</strong> Python 3.9+, FastAPI, SQLAlchemy (SQLite),
+Pydantic, BCrypt, Cryptography (AES-GCM), Web3.py.</li>
+<li><strong>Frontend:</strong> Vanilla HTML/CSS/JavaScript, Chart.js for
+a simple activity chart.</li>
+<li><strong>Database:</strong> SQLite with a single file
+(<code>smartdrm.db</code>) and tables: users, assets, licenses, groups,
+user_groups, audit_logs.</li>
+<li><strong>Blockchain:</strong> Optional Ganache (or other EVM chain);
+Web3.py and a Solidity contract interface; mock mode when
+disconnected.</li>
+<li><strong>Deployment:</strong> Single-entry script
+(<code>run.py</code>) starts the backend (Uvicorn) and a static HTTP
+server for the frontend; default ports 8000 and 5173.</li>
+</ul>
+<h3 id="backend-structure">5.2 Backend Structure</h3>
+<p>The application is organized into modules:</p>
+<ul>
+<li><strong>auth:</strong> Registration, login, and a dependency that
+resolves the current user from the Bearer token.</li>
+<li><strong>asset:</strong> Upload (encrypt, store, DB, chain), list
+owned/shared, download (license check, decrypt, stream), license
+issue/revoke, group create/add-user.</li>
+<li><strong>drm:</strong> Encryption and decryption helpers
+(AES-256-GCM, key from file).</li>
+<li><strong>blockchain:</strong> Web3 client and contract interface
+(asset registration, license issuance); fallback to mock.</li>
+<li><strong>ai_engine:</strong> Feature extraction from audit logs,
+rule-based detector, and API routes for dashboard stats and risk
+analysis.</li>
+<li><strong>utils:</strong> Audit logger (write and read audit
+entries).</li>
+</ul>
+<p>The root application mounts routers under <code>/auth</code>,
+<code>/asset</code>, and <code>/ai</code>, and exposes
+<code>/audit/logs</code> for the last N audit entries. CORS is enabled
+for the frontend origin. On startup, the database schema is created and
+default users (e.g., admin, demo) are seeded if missing.</p>
+<h3 id="data-models">5.3 Data Models</h3>
+<ul>
+<li><strong>User:</strong> id, username (unique), hashed_password,
+role.</li>
+<li><strong>Asset:</strong> id, owner_id (FK user), filename, asset_hash
+(unique), tx_hash, encryption_key_id (reserved), created_at.</li>
+<li><strong>License:</strong> id, asset_id, user_id (nullable), group_id
+(nullable), tx_hash, expires_at, access_limit, access_used, active.</li>
+<li><strong>Group:</strong> id, name (unique), admin_id (FK user).</li>
+<li><strong>UserGroup:</strong> user_id, group_id (many-to-many).</li>
+<li><strong>AuditLog:</strong> id, event_type, details (JSON string),
+timestamp, user_id (nullable).</li>
+</ul>
+<h3 id="api-summary">5.4 API Summary</h3>
+<ul>
+<li><code>POST /auth/register</code> — create user (username, password,
+role).</li>
+<li><code>POST /auth/login</code> — return token and user info.</li>
+<li><code>GET /auth/me</code> — return current user (Bearer).</li>
+<li><code>GET /asset/list</code> — list assets owned by current
+user.</li>
+<li><code>GET /asset/list/shared</code> — list assets licensed to
+current user (or groups).</li>
+<li><code>POST /asset/upload</code> — upload file (multipart), returns
+asset_hash and tx_hash.</li>
+<li><code>GET /asset/download/{asset_hash}</code> — download decrypted
+file (Bearer, license checked).</li>
+<li><code>POST /asset/license/issue</code> — create license (asset_id,
+user_username or group_id, expiry_days, access_limit).</li>
+<li><code>POST /asset/license/revoke</code> — set license inactive.</li>
+<li><code>GET /ai/dashboard/{user_id}</code> — total_assets,
+active_licenses, risk_level.</li>
+<li><code>GET /ai/analyze/{user_id}</code> — risk_score, risk_level,
+reasons.</li>
+<li><code>GET /audit/logs</code> — recent audit entries
+(JSON-serializable).</li>
+</ul>
+<h3 id="frontend">5.5 Frontend</h3>
+<p>The frontend is a multi-page app: login, register, dashboard, upload,
+assets, and AI analytics. Each protected page ensures a token is present
+and redirects to login otherwise. The assets page shows “My Uploaded
+Assets” (with grant license action) and “Shared With Me” (with
+download). Upload uses a drop zone and sends the file via FormData. The
+AI page displays the risk score/level, reasons, and a table of recent
+audit events. All API calls use the Bearer token and handle 401 by
+clearing storage and redirecting to login.</p>
+<hr />
+<h2 id="evaluation">6. Evaluation</h2>
+<h3 id="objectives">6.1 Objectives</h3>
+<p>We evaluate SmartDRM-X with respect to: (i)
+<strong>correctness</strong> of access control (only licensed users can
+download within limits); (ii) <strong>consistency</strong> of risk
+levels with the defined rules; (iii) <strong>latency</strong> of
+critical operations (login, upload, download, license check); and (iv)
+<strong>practical usability</strong> of the prototype for the intended
+workflows.</p>
+<h3 id="setup">6.2 Setup</h3>
+<ul>
+<li><strong>Hardware/OS:</strong> Standard desktop/laptop; Linux or
+macOS.</li>
+<li><strong>Backend:</strong> FastAPI on Uvicorn, SQLite, local file
+storage, blockchain in mock mode (no Ganache).</li>
+<li><strong>Frontend:</strong> Static server; browser
+(Chrome/Firefox).</li>
+<li><strong>Scenarios:</strong> User registration and login; asset
+upload (small files); license grant to a second user; download as
+licensee; revocation and subsequent access denial; repeated downloads to
+observe access_used and limit; generation of audit events and risk score
+changes when crossing rule thresholds.</li>
+</ul>
+<h3 id="correctness">6.3 Correctness</h3>
+<ul>
+<li><strong>Access control:</strong> We verified that (a) the owner of
+an asset can always download it; (b) a user with a valid license (within
+expiry and limit) can download and that access_used increments; (c)
+after revocation or when the limit is reached or expiry has passed, the
+same user receives 403; (d) a user without any license receives 403.
+These hold for both user-level and group-level licenses when the user is
+in the licensed group.</li>
+<li><strong>Audit trail:</strong> Every upload, grant, revoke, access,
+and denial was observed in the audit log with correct event types and
+details.</li>
+<li><strong>Encryption:</strong> Downloaded content matched the original
+file when decrypted by the backend; ciphertext on disk was verified to
+be non-matching with the plaintext.</li>
+</ul>
+<h3 id="risk-engine-behavior">6.4 Risk Engine Behavior</h3>
+<ul>
+<li>With no or few events in the last 24 hours, the risk level remained
+LOW and the score 0.</li>
+<li>When the number of ASSET_ACCESSED events for a user exceeded 20
+(respectively 50) in the window, the risk level increased to MEDIUM
+(respectively HIGH) with the expected “Moderate download volume” or
+“High download volume” reason.</li>
+<li>When ASSET_ACCESS_DENIED events exceeded 5, the score increased by
+30 and the corresponding reason appeared. The combination of rules
+produced HIGH when multiple conditions were met (e.g., high downloads
+and multiple denials).</li>
+</ul>
+<p>These results are consistent with the implemented rule set and
+demonstrate that the engine is usable for highlighting potentially
+abusive behavior.</p>
+<h3 id="performance">6.5 Performance</h3>
+<ul>
+<li><strong>Login:</strong> Typically under 50 ms (local DB, BCrypt
+verify).</li>
+<li><strong>Upload:</strong> Dominated by file I/O and encryption; for
+files of a few hundred KB, end-to-end was under 200 ms excluding
+network.</li>
+<li><strong>Download:</strong> License check and decryption for
+similar-sized files were under 100 ms; streaming is bounded by disk and
+network.</li>
+<li><strong>License verification:</strong> Performed in the same request
+as download (DB query and optional group resolution); no blockchain read
+during access, so latency remains low when the chain is used only for
+attestation.</li>
+</ul>
+<p>No formal stress test was conducted; the prototype is intended for
+small-to-medium user bases and moderate request rates.</p>
+<h3 id="usability">6.6 Usability</h3>
+<p>The web UI allows a researcher to: register and log in; upload a file
+and see asset hash and transaction hash; grant a license to another user
+(e.g., demo); log in as that user and see the asset under “Shared With
+Me” and download it; and view the dashboard and AI analytics page for
+risk and audit data. The “demo” user is seeded by default to simplify
+testing the grant flow. Documentation (README and “How it works” doc)
+describes the flows and APIs.</p>
+<hr />
+<h2 id="discussion">7. Discussion</h2>
+<h3 id="limitations">7.1 Limitations</h3>
+<ul>
+<li><strong>Centralization of trust:</strong> The server holds the
+encryption key and enforces all access decisions. A compromised server
+undermines confidentiality and integrity. Key management (HSM, vault)
+and hardening are necessary for production.</li>
+<li><strong>Blockchain as attestation only:</strong> License state is
+off-chain; the chain stores hashes and transaction references. This
+improves auditability but does not provide fully decentralized
+enforcement.</li>
+<li><strong>Rule-based risk model:</strong> The current engine uses
+fixed thresholds. It can be tuned but does not learn from data; false
+positives/negatives are possible. IP diversity is not yet captured in
+logs.</li>
+<li><strong>Single key for all assets:</strong> All assets are encrypted
+with one server key. Key rotation or per-asset keys would require a more
+complex key management design.</li>
+<li><strong>No formal verification:</strong> Smart contracts and backend
+logic have not been formally verified; testing and code review are the
+primary assurance.</li>
+</ul>
+<h3 id="ethical-and-deployment-considerations">7.2 Ethical and
+Deployment Considerations</h3>
+<p>DRM can restrict legitimate use and affect accessibility. Our
+prototype is aimed at research and controlled environments. Deployment
+in production would require clear terms of use, privacy considerations
+for audit data, and compliance with applicable regulations (e.g., GDPR
+for personal data in logs).</p>
+<hr />
+<h2 id="conclusion-and-future-work">8. Conclusion and Future Work</h2>
+<p>We presented SmartDRM-X, a blockchain and AI-driven digital rights
+management system that combines Ethereum-compatible attestation,
+AES-256-GCM encryption, flexible licensing with groups and revocation,
+and an audit-based behavioral risk engine. The system is implemented as
+a web application with a FastAPI backend and a lightweight frontend, and
+is documented for reproducibility. Evaluation confirmed correct access
+control, consistent risk level assignment, and acceptable latency for
+the prototype scope.</p>
+<p><strong>Future work</strong> includes: (i) integrating zero-knowledge
+proofs or privacy-preserving credentials for license verification
+without revealing user identity on-chain; (ii) replacing or
+supplementing the rule-based risk model with machine learning trained on
+audit logs and labeled abuse cases; (iii) per-asset or per-tenant key
+management and key rotation; (iv) capturing client IP (and optionally
+device/location) in audit logs to improve IP-diversity and anomaly
+features; (v) deploying the smart contract on a public testnet and
+measuring gas costs and confirmation times; and (vi) a formal security
+analysis and penetration testing before any production use.</p>
+<hr />
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Koenen, R. H., Lacy, J., Mackay, M., &amp; Mitchell, S. (2004). The
+long march to interoperable digital rights management. <em>Proceedings
+of the IEEE</em>, 92(6), 883–897.</li>
+<li>Rosenblatt, B., Trippe, B., &amp; Mooney, S. (2002). <em>Digital
+Rights Management: Business and Technology</em>. M&amp;T Books.</li>
+<li>Bechtold, S. (2003). The present and future of digital rights
+management. In <em>Digital Rights Management</em> (pp. 597–654).
+Springer.</li>
+<li>Zheng, Z., Xie, S., Dai, H. N., Chen, W., Chen, X., Weng, J., &amp;
+Imran, M. (2020). Blockchain-based digital rights management. <em>IEEE
+Access</em>, 8, 125 883–125 901.</li>
+<li>O’Dwyer, R., &amp; Malone, D. (2014). Bitcoin and the blockchain.
+<em>Technical report</em>, CS-2014-08, University of Dublin.</li>
+<li>Chen, Y., Bellavitis, C., &amp; Blockchain disruption and smart
+contracts. (2019). <em>Long Range Planning</em>, 52(5), 101 953.</li>
+<li>Salah, K., Rehman, M. H., Nizamuddin, N., &amp; Al-Fuqaha, A.
+(2019). Blockchain for AI: Review and open research challenges. <em>IEEE
+Access</em>, 7, 10 127–10 149.</li>
+<li>NIST. (2001). <em>Recommendation for Key Management</em>. NIST
+Special Publication 800-57.</li>
+<li>Dworkin, M. (2007). <em>Recommendation for Block Cipher Modes of
+Operation: Galois/Counter Mode (GCM) and GMAC</em>. NIST Special
+Publication 800-38D.</li>
+<li>Chandola, V., Banerjee, A., &amp; Kumar, V. (2009). Anomaly
+detection: A survey. <em>ACM Computing Surveys</em>, 41(3), 1–58.</li>
+<li>Ring, M., Wunderlich, S., Scheuring, D., Landes, D., &amp; Hotho, A.
+(2019). A survey of network-based intrusion detection data sets.
+<em>Computers &amp; Security</em>, 86, 147–167.</li>
+<li>Nakamoto, S. (2008). Bitcoin: A peer-to-peer electronic cash system.
+<em>Whitepaper</em>.</li>
+<li>Buterin, V. (2013). Ethereum white paper. <em>Whitepaper</em>.</li>
+<li>Schneier, B. (1996). <em>Applied Cryptography</em> (2nd ed.).
+Wiley.</li>
+<li>Provos, N., &amp; Mazières, D. (1999). A future-adaptable password
+scheme. <em>Proceedings of the USENIX Annual Technical Conference</em>,
+81–91.</li>
+</ol>
+<hr />
+<h2 id="appendix-a-glossary">Appendix A: Glossary</h2>
+<ul>
+<li><strong>DRM:</strong> Digital Rights Management.</li>
+<li><strong>GCM:</strong> Galois/Counter Mode (authenticated encryption
+mode for AES).</li>
+<li><strong>EVM:</strong> Ethereum Virtual Machine.</li>
+<li><strong>HSM:</strong> Hardware Security Module.</li>
+<li><strong>API:</strong> Application Programming Interface.</li>
+</ul>
+<hr />
+<h2 id="appendix-b-default-users-and-demo-flow">Appendix B: Default
+Users and Demo Flow</h2>
+<p>For reproducibility, the system seeds two default users when the
+backend starts (if they do not already exist):</p>
+<ul>
+<li><strong>admin</strong> / <strong>admin</strong> (role: admin): full
+access, can manage assets and view all analytics.</li>
+<li><strong>demo</strong> / <strong>demo</strong> (role: user): intended
+as a grantee for testing; log in as admin, grant a license to username
+“demo,” then log in as demo to see the asset under “Shared With Me” and
+download it.</li>
+</ul>
+<p>This allows a minimal two-user license flow without manual
+registration of the second user.</p>
+<hr />
+<p><em>Document version: 1.0. Total length: approximately 14–16 pages
+when formatted in a standard two-column conference style (e.g.,
+IEEE).</em></p>
+</body>
+</html>

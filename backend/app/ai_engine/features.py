@@ -40,7 +40,10 @@ def extract_features(user_id: int):
         ips = set() # TODO: Capture IP in logs
         
         for log in recent_logs:
-            details = json.loads(log.details)
+            try:
+                details = json.loads(log.details or "{}")
+            except (json.JSONDecodeError, TypeError):
+                details = {}
             if "asset_hash" in details:
                 unique_assets.add(details["asset_hash"])
             if "ip_address" in details:
