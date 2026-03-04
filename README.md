@@ -73,4 +73,5 @@ See `tests/api_test_flow.sh` for a curl-based test sequence.
 - [**How it works end-to-end**](docs/HOW_IT_WORKS.md) – User journeys, data flow, APIs, and how to run
 - [Architecture Overview](docs/architecture.md)
 - [Manual testing checklist](docs/manual_testing.md)
+- Reviews & evaluation material: see `docs/reviews/`
 - [API docs (Swagger)](http://127.0.0.1:8000/docs) when the backend is running

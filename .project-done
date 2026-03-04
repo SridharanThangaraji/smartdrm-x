@@ -1,0 +1,30 @@
+# Project verification summary — smart-drm
+# Generated as part of project-done verification. Do not remove.
+
+[project]
+name = smart-drm
+description = SmartDRM-X — Blockchain & AI digital rights management
+
+[verified]
+date = 2026-02-26
+entrypoint = python run.py (backend 8000 + frontend 5173)
+entrypoint_backend_only = python run.py --backend-only
+entrypoint_frontend_only = python run.py --frontend-only
+tests = PYTHONPATH=backend python -m pytest tests/ -v (requires pytest, httpx in requirements.txt)
+test_count = 50
+test_result = 44 passed, 5 skipped (when default admin not in DB), 4 warnings
+docs = docs/HOW_IT_WORKS.md, architecture.md, manual_testing.md, reviews/
+
+[run_instructions]
+install = python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+run = python run.py
+backend_only = python run.py --backend-only
+frontend_only = python run.py --frontend-only
+pytest = PYTHONPATH=backend python -m pytest tests/ -v
+docker = docker build -t smart-drm -f docker/Dockerfile . && docker run -p 8000:8000 -p 5173:5173 smart-drm
+
+[status]
+logic_verified = manual run; login test when backend up
+docs_verified = yes
+structure = backend/, frontend/, blockchain/, tests/, docs/, docker/
+note = Ganache on 7545 for blockchain features; API docs at /docs when backend running
