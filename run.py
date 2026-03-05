@@ -52,6 +52,27 @@ def main():
         p = subprocess.Popen(cmd, cwd=str(BACKEND_DIR), stdout=sys.stdout, stderr=sys.stderr)
         processes.append(p)
         print(f"Backend: http://127.0.0.1:{BACKEND_PORT}")
+        # High-level runtime summary for academic documentation
+        print("\n=== SmartDRM-X Runtime Summary ===")
+        print("Modules: Authentication, Asset Management, Blockchain & Smart Contracts,")
+        print("         License & Access Control, AI-Based Risk Analysis, Audit Logging, Frontend Dashboard")
+        try:
+            # Import here so that backend package is available when run via uvicorn
+            from backend.app.blockchain.web3_client import GANACHE_URL, web3  # type: ignore
+
+            is_connected = web3.is_connected()
+            status = "CONNECTED (real Ganache blockchain)" if is_connected else "MOCK MODE (Ganache not reachable)"
+            print(f"[Blockchain] Endpoint: {GANACHE_URL}")
+            print(f"[Blockchain] Status  : {status}")
+            if not is_connected:
+                print("[Blockchain] Note    : Asset uploads and license operations will record mock tx hashes")
+                print("                      so the system remains fully testable even without Ganache.")
+        except Exception as exc:  # pragma: no cover - diagnostics only
+            print(f"[Blockchain] Status  : Unknown (initialization error: {exc})")
+        print("Transactions: Asset uploads call register_asset_on_chain(),")
+        print("              license issue/approval calls issue_license_on_chain().")
+        print("              Corresponding tx hashes are stored alongside assets/licenses.")
+        print("==================================\n")
 
     if run_frontend:
         if not (FRONTEND_DIR / "index.html").exists():

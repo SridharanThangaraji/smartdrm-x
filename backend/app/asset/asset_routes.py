@@ -26,6 +26,53 @@ def hash_data(data: bytes) -> str:
     """Returns SHA-256 hash of provided bytes."""
     return hashlib.sha256(data).hexdigest()
 
+
+def _get_group_ids_for_user(db: Session, user: models.User):
+    """Return all group IDs the given user belongs to."""
+    return [
+        ug.group_id
+        for ug in db.query(models.UserGroup).filter(models.UserGroup.user_id == user.id).all()
+    ]
+
+
+def _get_asset_or_404(db: Session, asset_hash: str) -> models.Asset:
+    """Fetch an asset by hash or raise 404."""
+    asset = db.query(models.Asset).filter(models.Asset.asset_hash == asset_hash).first()
+    if not asset:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return asset
+
+
+def _find_valid_license(
+    db: Session,
+    asset: models.Asset,
+    user: models.User,
+    group_ids,
+    now: datetime.datetime,
+):
+    """Return a valid license record for this user/asset or None."""
+    return (
+        db.query(models.License)
+        .filter(
+            models.License.asset_id == asset.id,
+            models.License.active == True,
+            models.License.expires_at > now,
+            models.License.access_used < models.License.access_limit,
+            or_(models.License.user_id == user.id, models.License.group_id.in_(group_ids)),
+        )
+        .first()
+    )
+
+
+def _load_and_decrypt_from_storage(asset_hash: str) -> bytes:
+    """Load encrypted bytes from storage and return decrypted content."""
+    storage_path = os.path.join(STORAGE_DIR, f"{asset_hash}.enc")
+    if not os.path.exists(storage_path):
+        raise HTTPException(status_code=500, detail="Storage integrity failure")
+
+    with open(storage_path, "rb") as f:
+        return decrypt_data(f.read())
+
 @router.post("/upload")
 async def upload_asset(file: UploadFile = File(...), db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
     content = await file.read()
@@ -92,37 +139,22 @@ def issue_license(req: LicenseRequest, db: Session = Depends(get_db), user: mode
 @router.get("/download/{asset_hash}")
 def download_asset(asset_hash: str, db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
     """Authorizes and serves decrypted asset bytes."""
-    asset = db.query(models.Asset).filter(models.Asset.asset_hash == asset_hash).first()
-    if not asset:
-        raise HTTPException(status_code=404, detail="Asset not found")
+    asset = _get_asset_or_404(db, asset_hash)
 
     # Access Authorization (Owner or Licensed)
     if asset.owner_id != user.id:
         now = datetime.datetime.utcnow()
-        group_ids = [ug.group_id for ug in db.query(models.UserGroup).filter(models.UserGroup.user_id == user.id).all()]
-        
-        license_record = db.query(models.License).filter(
-            models.License.asset_id == asset.id,
-            models.License.active == True,
-            models.License.expires_at > now,
-            models.License.access_used < models.License.access_limit,
-            or_(models.License.user_id == user.id, models.License.group_id.in_(group_ids))
-        ).first()
+        group_ids = _get_group_ids_for_user(db, user)
 
+        license_record = _find_valid_license(db, asset, user, group_ids, now)
         if not license_record:
             log_event("ASSET_ACCESS_DENIED", {"asset_hash": asset_hash, "user_id": user.id})
             raise HTTPException(status_code=403, detail="No valid license or access limit reached")
-        
+
         license_record.access_used += 1
         db.commit()
 
-    # Serve decrypted file
-    storage_path = os.path.join(STORAGE_DIR, f"{asset_hash}.enc")
-    if not os.path.exists(storage_path):
-        raise HTTPException(status_code=500, detail="Storage integrity failure")
-
-    with open(storage_path, "rb") as f:
-        decrypted_content = decrypt_data(f.read())
+    decrypted_content = _load_and_decrypt_from_storage(asset_hash)
 
     log_event("ASSET_ACCESSED", {"asset_hash": asset_hash, "user_id": user.id})
     return Response(content=decrypted_content, media_type="application/octet-stream", headers={"Content-Disposition": f"attachment; filename={asset.filename}"})
@@ -135,7 +167,7 @@ def list_owned_assets(db: Session = Depends(get_db), user: models.User = Depends
 @router.get("/list/shared")
 def list_shared_assets(db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
     """Lists assets shared with the current user via individual or group licenses."""
-    group_ids = [ug.group_id for ug in db.query(models.UserGroup).filter(models.UserGroup.user_id == user.id).all()]
+    group_ids = _get_group_ids_for_user(db, user)
     licenses = db.query(models.License).filter(
         models.License.active == True,
         models.License.expires_at > datetime.datetime.utcnow(),
@@ -182,24 +214,33 @@ def add_user_to_group(group_id: int, username: str, db: Session = Depends(get_db
 @router.get("/catalog")
 def list_requestable_assets(db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
     """List assets the current user can request (not owner, not already licensed)."""
-    sub = db.query(models.License.asset_id).filter(
+    now = datetime.datetime.utcnow()
+    group_ids = _get_group_ids_for_user(db, user)
+
+    # Assets that already have an active license for this user (direct or via group)
+    user_license_q = db.query(models.License.asset_id).filter(
         models.License.active == True,
-        models.License.expires_at > datetime.datetime.utcnow(),
-        models.License.user_id == user.id
+        models.License.expires_at > now,
+        models.License.user_id == user.id,
     )
-    group_ids = [ug.group_id for ug in db.query(models.UserGroup).filter(models.UserGroup.user_id == user.id).all()]
     if group_ids:
-        sub_group = db.query(models.License.asset_id).filter(
+        group_license_q = db.query(models.License.asset_id).filter(
             models.License.active == True,
-            models.License.expires_at > datetime.datetime.utcnow(),
-            models.License.group_id.in_(group_ids)
+            models.License.expires_at > now,
+            models.License.group_id.in_(group_ids),
         )
-        sub = sub.union(sub_group)
-    already_licensed = sub.subquery()
-    already_requested = db.query(models.AccessRequest.asset_id).filter(
-        models.AccessRequest.requester_id == user.id,
-        models.AccessRequest.status == "pending"
-    ).subquery()
+        user_license_q = user_license_q.union(group_license_q)
+    already_licensed = user_license_q.subquery()
+
+    # Assets that already have a pending access request from this user
+    already_requested = (
+        db.query(models.AccessRequest.asset_id)
+        .filter(
+            models.AccessRequest.requester_id == user.id,
+            models.AccessRequest.status == "pending",
+        )
+        .subquery()
+    )
     assets = db.query(models.Asset, models.User.username).join(
         models.User, models.Asset.owner_id == models.User.id
     ).filter(
